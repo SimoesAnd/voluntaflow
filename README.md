@@ -6,6 +6,9 @@ O **VoluntaFlow** é uma plataforma Full-Stack desenvolvida para centralizar o a
 
 ---
 
+## 📌 Surgimento da Ideia
+A ideia do VoluntaFlow surgiu da observação de como a desinformação e a fragmentação de dados prejudicam a ajuda humanitária durante enchentes no Brasil. Muitas vezes, a vontade de ajudar é imensa, mas a logística falha porque os dados não estão conectados. O nome "VoluntaFlow" reflete a intenção de criar um fluxo contínuo e organizado entre a informação do desastre e a ação do voluntário.
+
 ## 🏗️ Estrutura do Projeto
 
 O repositório utiliza uma estrutura de monorepo simplificada:
@@ -41,4 +44,4 @@ O repositório utiliza uma estrutura de monorepo simplificada:
 ---
 
 ## 👨‍💻 Autor
-Desenvolvido por **Andrews Simões** — Estudante de Análise e Desenvolvimento de Sistemas.
+Desenvolvido por **Andrews Simões** — Estudante de Análise e Desenvolvimento de Sistemas | Projeto Vai Na Web.

@@ -16,9 +16,10 @@ export default function Login() {
     setLoading(true);
     setErro('');
 
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
     try {
-      // Bate na porta do Back-end que acabamos de criar
-      const response = await fetch('http://localhost:3001/api/login', {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha }),
@@ -27,14 +28,13 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Se a API disse ok, guardamos um "crachá" no navegador e vamos pro painel
         localStorage.setItem('volunta_admin', data.user.nome);
         router.push('/painel');
       } else {
-        // Mostra o erro (senha incorreta, e-mail errado...)
-        setErro(data.error);
+        setErro(data.error || 'Falha na autenticação.');
       }
     } catch (err) {
+      console.error("Erro de conexão:", err);
       setErro('Erro de conexão com o servidor.');
     } finally {
       setLoading(false);

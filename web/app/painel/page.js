@@ -19,35 +19,37 @@ export default function Painel() {
 
   // --- O CADEADO DE SEGURANÇA ---
   useEffect(() => {
-    // Verifica se existe o token salvo pelo login
     const token = localStorage.getItem('volunta_admin');
     if (!token) {
-      router.push('/login'); // Expulsa para o login se não tiver permissão
+      router.push('/login');
     } else {
-      setAdminNome(token); // Salva o nome para mostrar na tela
-      buscarVoluntarios(); // Só busca os dados se estiver logado
+      setAdminNome(token);
+      buscarVoluntarios(); 
     }
   }, [router]);
 
-  // Função para fazer Logout (Sair)
   const handleLogout = () => {
     localStorage.removeItem('volunta_admin');
     router.push('/login');
   };
 
-  // A função GET: Busca os dados na API Node.js
+  // A função GET: Busca os dados na API
   const buscarVoluntarios = async () => {
     setLoading(true);
     setErro('');
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
     try {
-      const response = await fetch('http://localhost:3001/api/voluntarios');
+      const response = await fetch(`${API_URL}/api/voluntarios`);
+      
       if (!response.ok) throw new Error('Falha ao conectar com o servidor.');
       
       const dados = await response.json();
       setVoluntarios(dados);
     } catch (err) {
       console.error(err);
-      setErro('Não foi possível carregar os dados. O servidor está rodando?');
+      setErro('Não foi possível carregar os dados. Verifique a conexão com a API.');
     } finally {
       setLoading(false);
     }
@@ -59,24 +61,20 @@ export default function Painel() {
     vol.estado.toLowerCase().includes(busca.toLowerCase())
   );
 
-  // Cálculos para os Cards de Estatísticas
   const totalVoluntarios = voluntarios.length;
   const estadosUnicos = new Set(voluntarios.map(v => v.estado)).size;
   
-  // Função para formatar a data
   const formatarData = (dataIso) => {
     if (!dataIso) return '-';
     const data = new Date(dataIso);
     return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(data);
   };
 
-  // Se não tem adminNome ainda, renderiza uma tela vazia (evita piscar o painel antes de redirecionar)
   if (!adminNome) return null;
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans text-gray-800">
       
-      {/* Sidebar / Header */}
       <header className="bg-gray-900 text-white px-6 py-4 sticky top-0 z-50 shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-4">
@@ -103,7 +101,6 @@ export default function Painel() {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
         
-        {/* Título e Botão de Atualizar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-extrabold text-gray-900">Visão Geral</h1>
@@ -118,7 +115,6 @@ export default function Painel() {
           </button>
         </div>
 
-        {/* Cards de Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div className="p-4 bg-blue-50 text-blue-600 rounded-xl"><Users size={28} /></div>
@@ -143,7 +139,6 @@ export default function Painel() {
           </div>
         </div>
 
-        {/* Área de Pesquisa */}
         <div className="bg-white p-4 rounded-t-2xl border-x border-t border-gray-100 shadow-sm flex items-center gap-3">
           <Search size={20} className="text-gray-400 ml-2" />
           <input 
@@ -155,7 +150,6 @@ export default function Painel() {
           />
         </div>
 
-        {/* Tabela de Dados */}
         <div className="bg-white border border-gray-100 shadow-sm rounded-b-2xl overflow-x-auto">
           {loading ? (
             <div className="p-12 text-center text-gray-500 font-medium animate-pulse">

@@ -17,7 +17,7 @@ export default function Voluntarios() {
   const [status, setStatus] = useState('idle');
   const [mensagem, setMensagem] = useState('');
 
-  // --- NOVA FUNÇÃO: Aplica a máscara (99) 99999-9999 ---
+  // --- FUNÇÃO: Aplica a máscara (21) 99999-9999 ---
   const formatarTelefone = (valor) => {
     return valor
       .replace(/\D/g, '') // Remove tudo o que não for número
@@ -26,7 +26,6 @@ export default function Voluntarios() {
       .replace(/(-\d{4})\d+?$/, '$1'); // Impede que o usuário digite mais números do que deve
   };
 
-  // --- ATUALIZADO: Puxa a máscara se for o campo 'telefone' ---
   const handleChange = (e) => {
     const { name, value } = e.target;
     
@@ -41,8 +40,11 @@ export default function Voluntarios() {
     e.preventDefault();
     setStatus('loading');
 
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
     try {
-      const response = await fetch('http://localhost:3001/api/voluntarios', {
+      const response = await fetch(`${API_URL}/api/voluntarios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

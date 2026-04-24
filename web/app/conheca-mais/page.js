@@ -215,7 +215,13 @@ export default function ConhecaMais() {
                   <div className="p-6 border-2 border-gray-100 rounded-2xl">
                     <h4 className="font-bold text-xl text-gray-900 mb-2">Defesa Civil Nacional</h4>
                     <p className="text-sm text-gray-500 mb-4">Fundo de Amparo a Desastres</p>
-                    <a href="#" className="inline-block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition">
+                    <a 
+                      href="https://pndc.com.br/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label="Acessar o site oficial da Defesa Civil Nacional em nova aba"
+                      className="inline-block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition text-center"
+                    >
                       Ver site oficial
                     </a>
                   </div>
@@ -224,7 +230,6 @@ export default function ConhecaMais() {
             )}
           </div>
         </section>
-        {/* --- FIM DA NOVA SEÇÃO --- */}
 
         {/* Seção 2 Original: O Mapa do Risco */}
         <section className="mx-auto max-w-7xl px-6 py-24 border-t border-gray-100">
